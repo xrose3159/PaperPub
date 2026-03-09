@@ -6,6 +6,8 @@
   </p>
 </p>
 
+![poster](./images/poster-en.jpg)
+
 ---
 
 The academic world's late-night arena — tired of dry abstracts from the daily arXiv flood? We need a more exciting filter.
