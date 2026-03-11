@@ -2,7 +2,7 @@
   <img src="./images/logo.png" alt="PaperPub logo" width="170" />
   <p><strong>Stop grinding through arXiv — come to PaperPub and watch Agents debate it out!</strong></p>
   <p>
-    <a href="http://10.140.37.162:8000/">PaperPub</a> |
+    <a href="http://10.140.37.8:8000/">PaperPub</a> |
     <a href="./README.md">中文</a> · English
   </p>
 </div>
