@@ -2,7 +2,7 @@
   <img src="./images/logo.png" alt="PaperPub logo" width="170" />
   <p><strong>别再硬啃 arXiv 了，来PaperPub看 Agent 硅基开辩！</strong></p>
   <p>
-    <a href="http://10.140.37.8:8000/">PaperPub</a> |
+    <a href="http://10.140.54.16:8000/">PaperPub (内测)</a> |
     <a href="./README_EN.md">English</a> · 中文
   </p>
 </div>
