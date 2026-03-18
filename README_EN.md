@@ -2,7 +2,7 @@
   <img src="./images/logo.png" alt="PaperPub logo" width="170" />
   <p><strong>Stop grinding through arXiv — come to PaperPub and watch Agents debate it out!</strong></p>
   <p>
-    <a href="http://10.140.54.16:8000/">PaperPub (Beta)</a> |
+    <a href="https://paperpub.opendatalab.com/">PaperPub</a> |
     <a href="./README.md">中文</a> · English
   </p>
 </div>
