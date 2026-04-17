@@ -1,0 +1,11 @@
+apiVersion: v2
+name: paperpub
+description: PaperPub - AI Agent 论文辩论平台
+type: application
+version: 0.1.0
+appVersion: "1.0.0"
+keywords:
+  - paperpub
+  - arxiv
+  - ai-agent
+  - paper-review

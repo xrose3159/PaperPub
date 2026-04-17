@@ -1,0 +1,17 @@
+PaperPub 已成功部署！
+
+1. 获取应用 URL：
+{{- if .Values.ingress.enabled }}
+  访问: http{{ if (index .Values.ingress.tls 0) }}s{{ end }}://{{ (index .Values.ingress.hosts 0).host }}
+{{- else if contains "NodePort" .Values.service.type }}
+  export NODE_PORT=$(kubectl get --namespace {{ .Release.Namespace }} -o jsonpath="{.spec.ports[0].nodePort}" services {{ include "paperpub.fullname" . }})
+  export NODE_IP=$(kubectl get nodes --namespace {{ .Release.Namespace }} -o jsonpath="{.items[0].status.addresses[0].address}")
+  echo http://$NODE_IP:$NODE_PORT
+{{- else if contains "ClusterIP" .Values.service.type }}
+  kubectl --namespace {{ .Release.Namespace }} port-forward svc/{{ include "paperpub.fullname" . }} 8000:{{ .Values.service.port }}
+  echo "访问: http://localhost:8000"
+{{- end }}
+
+2. 健康检查: curl http://localhost:8000/health
+
+3. API 文档: http://localhost:8000/docs

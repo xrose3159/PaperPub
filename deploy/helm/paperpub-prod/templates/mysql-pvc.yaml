@@ -1,0 +1,17 @@
+{{- if .Values.mysql.enabled }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: paperpub-mysql-data
+  annotations:
+    helm.sh/resource-policy: keep
+  labels:
+    {{- include "paperpub.labels" . | nindent 4 }}
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: {{ .Values.mysql.storageClass }}
+  resources:
+    requests:
+      storage: {{ .Values.mysql.storage }}
+{{- end }}

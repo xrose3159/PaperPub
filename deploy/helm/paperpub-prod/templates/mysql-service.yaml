@@ -1,0 +1,15 @@
+{{- if .Values.mysql.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: paperpub-mysql
+  labels:
+    {{- include "paperpub.labels" . | nindent 4 }}
+spec:
+  type: ClusterIP
+  selector:
+    app: paperpub-mysql
+  ports:
+    - port: 3306
+      targetPort: 3306
+{{- end }}

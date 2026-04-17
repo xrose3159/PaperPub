@@ -1,0 +1,106 @@
+# ── 副本数 ──────────────────────────────────────────────────
+replicaCount: 1
+
+# ── 镜像配置 ────────────────────────────────────────────────
+# 镜像仓库地址由 Zadig 构建流程自动填充
+# 新环境 ACR: acr-openxlab-prod-registry-vpc.cn-shanghai.cr.aliyuncs.com
+# 旧环境 ACR: eng-center-registry.cn-shanghai.cr.aliyuncs.com
+image:
+  repository: acr-openxlab-prod-registry-vpc.cn-shanghai.cr.aliyuncs.com/cloud/paperpub
+  tag: latest
+  pullPolicy: IfNotPresent
+
+imagePullSecrets:
+  - name: regcred
+  - name: default-registry-secret
+nameOverride: ""
+fullnameOverride: ""
+
+# ── 环境标识（dev / qa / prod）──────────────────────────────
+envProfile: dev
+
+# ── 容器端口 ────────────────────────────────────────────────
+containerPort: 8000
+
+# ── Service ─────────────────────────────────────────────────
+service:
+  type: ClusterIP
+  port: 8000
+
+# ── Ingress ─────────────────────────────────────────────────
+ingress:
+  enabled: false
+  className: nginx
+  annotations: {}
+  hosts:
+    - host: paperpub.staging.opendatalab.org.cn
+      paths:
+        - path: /
+          pathType: Prefix
+    - host: paperpub.staging.opendatalab.com
+      paths:
+        - path: /
+          pathType: Prefix
+  tls: []
+
+# ── 资源配额（参考文档 6.1/6.2 建议）────────────────────────
+resources:
+  requests:
+    cpu: 250m
+    memory: 512Mi
+  limits:
+    cpu: 500m
+    memory: 512Mi
+
+# ── 持久化存储 ──────────────────────────────────────────────
+persistence:
+  enabled: true
+  storageClass: openxlab-nas
+  accessMode: ReadWriteOnce
+  size: 5Gi
+  existingClaim: ""
+
+# ── 环境变量（注入 ConfigMap）────────────────────────────────
+env:
+  OPENAI_BASE_URL: ""
+  OPENAI_MODEL: ""
+
+# ── 敏感配置（注入 Secret）──────────────────────────────────
+secret:
+  DATABASE_URL: "mysql+pymysql://paperpub:PA93-zQpXB%23!R4i@rm-uf64tph59e4yp2khp.mysql.rds.aliyuncs.com:3306/paperpub-opendatalab?charset=utf8mb4"
+  JWT_SECRET: ""
+  OPENAI_API_KEY: ""
+  SMTP_USER: "1257292275@qq.com"
+  SMTP_PASSWORD: "rigyektgpuzaijjc"
+  
+# ── 功能开关（对齐迁移文档模板参数）──────────────────────────
+# 是否启用 downscaler（dev/qa 开启，prod 禁止）
+enableDownscaler: true
+# 是否启用健康检查（就绪 + 存活）
+enableHealthCheck: true
+# 是否启用 Prometheus 监控（端口 9091，路径 /metrics）
+enableMonitor: true
+
+# ── 健康检查 ────────────────────────────────────────────────
+livenessProbe:
+  httpGet:
+    path: /health
+    port: http
+  initialDelaySeconds: 15
+  periodSeconds: 30
+  timeoutSeconds: 5
+  failureThreshold: 3
+
+readinessProbe:
+  httpGet:
+    path: /health
+    port: http
+  initialDelaySeconds: 5
+  periodSeconds: 10
+  timeoutSeconds: 3
+  failureThreshold: 3
+
+# ── 调度约束 ────────────────────────────────────────────────
+nodeSelector: {}
+tolerations: []
+affinity: {}
